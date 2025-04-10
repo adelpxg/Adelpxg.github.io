@@ -1,45 +1,60 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>Form Pendaftaran</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Register</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f5f5f5;
+      background-color: #f0f0f5;
       margin: 0;
-      padding: 20px;
+      padding: 0;
       display: flex;
       justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
 
     .container {
-      width: 100%;
+      width: 90%;
       max-width: 400px;
-      background: #fff;
-      padding: 25px;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      background: #ffffff;
+      padding: 30px 25px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      transition: 0.3s ease;
     }
 
     h2 {
       text-align: center;
+      margin-bottom: 25px;
       color: #333;
+      font-weight: 600;
     }
 
-    form {
-      margin-bottom: 20px;
+    input,
+    button {
+      width: 100%;
+      padding: 14px;
+      margin: 12px 0;
+      border-radius: 14px;
+      font-size: 16px;
+      box-sizing: border-box;
+      transition: all 0.2s ease-in-out;
     }
 
     input {
-      width: 100%;
-      padding: 12px;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 16px;
-      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+      border: 1.5px solid #ddd;
+      background: #f9f9f9;
+      color: #333;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #4CAF50;
+      background-color: #fff;
+      box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
     }
 
     input::placeholder {
@@ -47,57 +62,54 @@
     }
 
     small {
-      color: #666;
       font-size: 13px;
+      color: #666;
+      margin-top: -8px;
       display: block;
-      margin-top: -6px;
-      margin-bottom: 10px;
     }
 
     button {
-      width: 100%;
       background-color: #4CAF50;
       color: white;
-      padding: 12px;
       border: none;
-      border-radius: 8px;
-      font-size: 16px;
+      font-weight: 600;
       cursor: pointer;
-      margin-top: 10px;
+      box-shadow: 0 4px 14px rgba(76, 175, 80, 0.3);
     }
 
     button:hover {
       background-color: #45a049;
     }
 
-    #response {
-      text-align: center;
-      font-weight: bold;
-      margin-top: 20px;
-      color: #333;
-    }
-
     .link-login {
       text-align: center;
-      margin-top: 20px;
       font-size: 14px;
+      margin-top: 18px;
     }
 
     .link-login a {
       color: #007bff;
-      text-decoration: underline;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    #response {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+      color: #444;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Form Pendaftaran</h2>
+    <h2>Daftar Akun</h2>
     <form id="registerForm">
-      <input type="text" name="username" placeholder="Masukkan username Anda" required>
-      <input type="email" name="email" placeholder="Masukkan email yang valid" required>
-      <input type="password" name="password" placeholder="Kata sandi (min. 6 karakter)" required>
+      <input type="text" name="username" placeholder="Masukkan username Anda" required />
+      <input type="email" name="email" placeholder="Masukkan email yang valid" required />
+      <input type="password" name="password" placeholder="Kata sandi (min. 6 karakter)" required />
       <small>Password harus berisi huruf besar, huruf kecil, dan angka</small>
-      <input type="text" name="phone" placeholder="Nomor HP (min. 10 digit)" required>
+      <input type="text" name="phone" placeholder="Nomor HP (min. 10 digit)" required />
       <button type="submit">Daftar</button>
     </form>
 
@@ -146,9 +158,8 @@
         .then(res => {
           if (res === "register_success") {
             alert("Pendaftaran berhasil! Silakan cek email untuk konfirmasi.");
-            // Simulasi kode konfirmasi
             const kode = Math.floor(100000 + Math.random() * 900000);
-            console.log("Kode konfirmasi:", kode); // Bisa diganti kirim email
+            console.log("Kode konfirmasi:", kode);
             this.reset();
           } else {
             alert("Gagal mendaftar.");
