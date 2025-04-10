@@ -1,28 +1,26 @@
+<!-- register.html -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="theme-color" content="#4CAF50" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#4CAF50">
   <title>Daftar Akun</title>
   <style>
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
       font-family: 'Segoe UI', sans-serif;
     }
-
     body {
       background-color: #f0f2f5;
+      margin: 0;
       height: 100vh;
-      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
+      overflow: hidden;
     }
-
     .container {
       background: #ffffff;
       padding: 30px 25px;
@@ -31,76 +29,44 @@
       width: 90%;
       max-width: 400px;
     }
-
     h2 {
       text-align: center;
       margin-bottom: 25px;
       color: #333;
-      font-weight: 600;
     }
-
-    form input,
-    form button {
+    input,
+    button {
       width: 100%;
       padding: 14px;
       margin: 10px 0;
       border-radius: 14px;
       font-size: 16px;
-      outline: none;
-      transition: 0.2s ease-in-out;
     }
-
     input {
       border: 1.5px solid #ddd;
       background: #f9f9f9;
-      color: #333;
     }
-
     input:focus {
       border-color: #4CAF50;
       background-color: #fff;
-      box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.15);
     }
-
     input::placeholder {
       color: #aaa;
     }
-
     small {
       font-size: 13px;
       color: #666;
       margin-top: -5px;
       display: block;
     }
-
     button {
       background-color: #4CAF50;
       color: white;
       border: none;
       font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 4px 14px rgba(76, 175, 80, 0.2);
     }
-
     button:hover {
       background-color: #43a047;
-    }
-
-    .link-login {
-      text-align: center;
-      font-size: 14px;
-      margin-top: 15px;
-    }
-
-    .link-login a {
-      color: #007bff;
-      text-decoration: none;
-    }
-
-    #response {
-      text-align: center;
-      margin-top: 15px;
-      font-size: 14px;
     }
   </style>
 </head>
@@ -115,53 +81,125 @@
       <input type="text" name="phone" placeholder="Nomor HP (min. 10 digit)" required />
       <button type="submit">Daftar</button>
     </form>
+  </div>
 
-    <div class="link-login">
-      Sudah punya akun? <a href="login.html">Login di sini</a>
-    </div>
+  <script>
+    document.getElementById("registerForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
 
-    <div id="response"></div>
+      const password = formData.get("password");
+      const phone = formData.get("phone");
+      if (password.length < 6 || !/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/\d/.test(password)) {
+        alert("Password tidak memenuhi syarat!");
+        return;
+      }
+      if (!/^\d{10,}$/.test(phone)) {
+        alert("Nomor HP tidak valid!");
+        return;
+      }
+
+      // Simpan data sementara di sessionStorage
+      sessionStorage.setItem("registerData", JSON.stringify({
+        username: formData.get("username"),
+        email: formData.get("email"),
+        password: formData.get("password"),
+        phone: formData.get("phone")
+      }));
+
+      // Pindah ke halaman konfirmasi
+      window.location.href = "konfirmasi_akun.html";
+    });
+  </script>
+</body>
+</html>
+
+<!-- konfirmasi_akun.html -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#4CAF50">
+  <title>Konfirmasi Akun</title>
+  <style>
+    * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+    body {
+      background-color: #f0f2f5;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+    .container {
+      background: #fff;
+      padding: 30px 25px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      width: 90%;
+      max-width: 400px;
+    }
+    h2 { text-align: center; margin-bottom: 25px; color: #333; }
+    input, button {
+      width: 100%; padding: 14px; margin: 10px 0; border-radius: 14px; font-size: 16px;
+    }
+    input { border: 1.5px solid #ddd; background: #f9f9f9; }
+    input:focus { border-color: #4CAF50; background-color: #fff; }
+    button {
+      background-color: #4CAF50; color: white; border: none; font-weight: 600;
+    }
+    button:hover { background-color: #43a047; }
+    #info { font-size: 14px; text-align: center; margin-top: 10px; color: #333; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Konfirmasi Email</h2>
+    <p style="text-align:center; font-size:14px;">Masukkan kode OTP yang dikirim ke email Anda.</p>
+    <input type="text" id="otp" placeholder="Masukkan kode OTP" maxlength="6" required>
+    <button onclick="verifikasiOTP()">Verifikasi</button>
+    <div id="info"></div>
   </div>
 
   <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbxQEQjHKHPgsVtDYZl7slj2neWg1yuGg-xWdcRM4mC4LcA5iwY5g0_pXXLC-Hb2mnen/exec";
+    const data = JSON.parse(sessionStorage.getItem("registerData"));
+    const kodeOTP = Math.floor(100000 + Math.random() * 900000);
 
-    function validateRegister(formData) {
-      const email = formData.get("email");
-      const password = formData.get("password");
-      const phone = formData.get("phone");
-
-      if (password.length < 6 || !/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/\d/.test(password)) {
-        alert("Password tidak memenuhi syarat!");
-        return false;
-      }
-
-      if (!/^\d{10,}$/.test(phone)) {
-        alert("Nomor HP harus minimal 10 digit dan hanya angka!");
-        return false;
-      }
-
-      return true;
-    }
-
-    document.getElementById("registerForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const formData = new FormData(this);
-      formData.append("action", "register");
-
-      if (!validateRegister(formData)) return;
-
-      fetch(scriptURL, { method: "POST", body: formData })
-        .then(res => res.text())
-        .then(res => {
-          if (res === "register_success") {
-            alert("Pendaftaran berhasil! Silakan cek email untuk konfirmasi.");
-            this.reset();
-          } else {
-            alert("Gagal mendaftar.");
-          }
-        });
+    // Simulasi pengiriman email (replace with actual email API call if needed)
+    fetch(scriptURL, {
+      method: "POST",
+      body: new URLSearchParams({
+        action: "send_otp",
+        email: data.email,
+        otp: kodeOTP
+      })
     });
+
+    function verifikasiOTP() {
+      const inputOTP = document.getElementById("otp").value;
+      if (inputOTP === kodeOTP.toString()) {
+        const formData = new FormData();
+        formData.append("username", data.username);
+        formData.append("email", data.email);
+        formData.append("password", data.password);
+        formData.append("phone", data.phone);
+        formData.append("action", "register");
+
+        fetch(scriptURL, {
+          method: "POST",
+          body: formData
+        }).then(res => res.text()).then(response => {
+          document.getElementById("info").innerText = "Akun berhasil dikonfirmasi dan didaftarkan!";
+          sessionStorage.clear();
+        });
+      } else {
+        document.getElementById("info").innerText = "Kode OTP salah. Coba lagi.";
+      }
+    }
   </script>
 </body>
 </html>
